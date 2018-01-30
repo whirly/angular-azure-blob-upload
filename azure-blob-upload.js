@@ -40,7 +40,7 @@
                                 'Content-Type': state.file.type,
                             },
                             transformRequest: [],
-                        }).success(function (data, status, headers, config) {
+                        }).then(function (data, status, headers, config) {
                             $log.log(data);
                             $log.log(status);
                             state.bytesUploaded += requestData.length;
@@ -49,8 +49,7 @@
                             if (state.progress) state.progress(percentComplete, data, status, headers, config);
 
                             uploadFileInBlocks(reader, state);
-                        })
-                        .error(function (data, status, headers, config) {
+                        }, function (data, status, headers, config) {
                             $log.log(data);
                             $log.log(status);
 
@@ -141,12 +140,11 @@
                 headers: {
                     'x-ms-blob-content-type': state.file.type,
                 }
-            }).success(function (data, status, headers, config) {
+            }).then(function (data, status, headers, config) {
                 $log.log(data);
                 $log.log(status);
                 if (state.complete) state.complete(data, status, headers, config);
-            })
-            .error(function (data, status, headers, config) {
+            }, function (data, status, headers, config) {
                 $log.log(data);
                 $log.log(status);
                 if (state.error) state.error(data, status, headers, config);
